@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="wizard_product_form" model="ir.actions.act_window">
+        <field name="name">Edit Product</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.product</field>
+        <!--        <field name="src_model">"mysales.product"</field>-->
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record model="ir.ui.view" id="wizard_product_form">
+        <field name="name">wizard.form</field>
+        <field name="model">wizard.product</field>
+        <field name="arch" type="xml">
+            <header>
+                <button string="confirm" type="object" name="confirm_progressbar" class="oe_highlight"
+                        attrs="{'invisible': [('state','!=','draft')]}"/>
+                <button string="Done" type="object" name="done_progressbar" class="oe_highlight"
+                        attrs="{'invisible': [('state','!=','confirm')]}"/>
+                <field name="state" widget="statusbar"/>
+            </header>
+            <form string="Add Attendees">
+                <group>
+                    <field name="product_ids" context="{'active_test': False}"/>
+                    <field name="in_stock"/>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="order_report">
+            <t t-call="web.html_container">
+                <t t-set="page_no" t-value="0" />
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+                        <div class="page">
+
+                            <div class="jumbotron jumbotron-fluid">
+                                <div class="container text-center">
+                                    <h1 class="display-6">Order Report</h1>
+                                </div>
+                            </div>
+
+
+                            <div class="media" style="align-items: center;">
+                                <img
+                                        t-attf-src="data:image/*;base64,{{o.profile_pic}}"
+                                        t-att-alt="o.cust_id"
+                                        style="max-width: 200px"
+                                        class="align-self-start mr-3"
+                                />
+                                <div class="media-body">
+                                    <h6 class="mt-0 text-uppercase">
+                                        Customer Name:
+                                        <span t-field="o.cust_id"/>
+                                    </h6>
+                                    <h6 class="mt-0 text-uppercase">
+                                        Phone no:
+                                        <span t-field="o.pno"/>
+                                    </h6>
+                                </div>
+                            </div>
+
+                            <p>
+                                <span>Order Id:</span>
+                                <span t-field="o.order_id"/>
+                            </p>
+                            <table class="table table-bordered mt32 table-dark ">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            <span>Sno</span>
+                                        </th>
+                                        <th class="text-center">
+                                            <span>Product</span>
+                                        </th>
+                                        <th class="text-center">
+                                            <span>Qty</span>
+                                        </th>
+                                        <th class="text-center">
+                                            <span>Price</span>
+                                        </th>
+                                        <th class="text-center">
+                                            <span>Sub Total</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="count" t-value="0"/>
+                                    <tr class="text-center" t-foreach="o.order_line_ids" t-as="p">
+                                        <td>
+                                            <t t-set="count" t-value="count + 1"/>
+                                            <span t-esc="count"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="p.product_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="p.quantity"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="p.price"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="p.sub_total"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="text-center">
+                                        <td colspan="3"></td>
+                                        <td>Total:</td>
+                                        <td>
+                                            <span t-field="o.total"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="footer o_standard_footer">
+                            <div class="text-center" style="border-top: 1px solid black;">
+                                <ul class="list-inline mb4">
+                                    <li class="list-inline-item">page:
+                                        <t t-set="page_no" t-value="page_no + 1"/>
+                                        <span t-esc="page_no"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

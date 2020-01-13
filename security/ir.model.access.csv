@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mysales_customer,access_mysales_customer,model_mysales_customer,base.group_user,1,1,1,1
+access_mysales_product,access_mysales_product,model_mysales_product,base.group_user,1,1,1,1
+access_mysales_order,access_mysales_order,model_mysales_order,base.group_user,1,1,1,1
+access_mysales_orderline,access_mysales_orderline,model_mysales_orderline,base.group_user,1,1,1,1

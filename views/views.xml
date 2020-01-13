@@ -1,0 +1,122 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="mysales.list">
+            <field name="name">mysales list</field>
+            <field name="model">mysales.customer</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="customer_id"/>
+                    <field name="name"/>
+                    <field name="address"/>
+                    <field name="pno"/>
+                    <field name="dob"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="customer_action_window">
+            <field name="name">customer window</field>
+            <field name="res_model">mysales.customer</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+        <record model="ir.ui.view" id="mysales_customer_kanban">
+            <field name="name">Customers kanban</field>
+            <field name="model">mysales.customer</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="profile_pic"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="o_kanban_image">
+                                                <field name="profile_pic" widget="image"/>
+                                                <!--
+
+ <img t-att-src="kanban_image('mysales.customer','profile_pic',record.id.raw_value)"-->
+                                                <!--                                                     alt="img"/>-->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="customer_form_view">
+            <field name="name">customer.form</field>
+            <field name="model">mysales.customer</field>
+            <field name="arch" type="xml">
+
+                <form string="Customer Form">
+                    <sheet>
+                        <xpath expr="//sheet" position="before">
+                            <header>
+                                <button name="send_mail" string="Send mail" type="object"
+                                        class="oe_highlight"/>
+                            </header>
+                        </xpath>
+                        <group>
+                            <field name="profile_pic" widget="image" nolabel="1" class="oe_avatar"/>
+                            <field name="customer_id"/>
+                            <group>
+                                <field name="name"/>
+                                <field name="address"/>
+                                <field name="pno"/>
+                                <field name="dob"/>
+                            </group>
+                            <group>
+                                <field name="email"/>
+                                <field name="panno"/>
+                                <field name="adhar"/>
+                            </group>
+                             <group>
+                                <field name="festival_name"/>
+                                <field name="festival_date"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <menuitem name="My sales" id="mysales_menu_root"/>
+        <!-- menu categories -->
+        <menuitem name="Orders" id="sales_orders_menu" parent="sales_customer_menu"
+                  action="mysales.order_action_window"/>
+
+        <menuitem name="Product" id="sales_product_menu" parent="mysales_menu_root"
+                  action="mysales.product_action_window"/>
+
+        <menuitem name="Customer" id="sales_customer_menu" parent="mysales_menu_root"/>
+        <menuitem name="Customer" id="sales_customer_menu1" parent="sales_customer_menu"
+                  action="customer_action_window"/>
+
+        <!-- menu categories -->
+        <!--    <menuitem name="Menu 1" id="mysales_menu_1" parent="mysales_menu_root"/>-->
+        <!--    <menuitem name="Menu 2" id="mysales_menu_2" parent="mysales_menu_root"/>-->
+        <!-- actions -->
+        <!--
+        <menuitem name="List" id="mysales.menu_1_list" parent="mysales.menu_1"
+                  action="mysales.action_window"/>
+        <menuitem name="Server to list" id="mysales" parent="mysales.menu_2"
+                  action="mysales.action_server"/>
+        -->
+    </data>
+</odoo>

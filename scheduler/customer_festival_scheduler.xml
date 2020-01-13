@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<odoo>
+ <data>
+  		<!-- scheduler for Festival wishes -->
+		<record id="festival_wishes" model="ir.cron">
+			<field name="name">Customer festival wishes</field>
+			<field name="model_id" ref="model_mysales_customer" />
+			<field name="state">code</field>
+			<field name="code">model.send_festival_email()</field>
+			<field name="interval_number">1</field>
+			<field name="interval_type">hours</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="False" />
+			<field name="active" eval="False" />
+		</record>
+
+ </data>
+</odoo>
+

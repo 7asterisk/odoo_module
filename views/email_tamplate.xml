@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Template for sale order payment mail -->
+        <record id="customer_email" model="mail.template">
+            <field name="name">Customer email</field>
+            <field name="model_id" ref="mysales.model_mysales_customer"/>
+            <field name="email_from">abhishek.kumar@pragtech.co.in</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject">Odoo account details</field>
+            <field name="body_html"><![CDATA[
+			<h1> Odoo Welcomes you as a family </h1>
+			<h3>Your admition details are</h3>
+				<p>name: ${object.name}</p>
+				<p>Address: ${object.address}</p>
+				<p>Phone No: ${object.pno}</p>
+				<p>Adhar NO: ${object.adhar}</p>
+			]]></field>
+
+        </record>
+
+        <record id="festival_wish_email" model="mail.template">
+            <field name="name">Festival  email</field>
+            <field name="model_id" ref="mysales.model_mysales_customer"/>
+            <field name="email_from">abhishek.kumar@pragtech.co.in</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject">Happy ${object.festival_name} !</field>
+            <field name="body_html"><![CDATA[
+            <p>Hello ${object.name}</p>
+            wish You a very happy ${object.festival_name}
+            we hope you have great day. !
+            ]]>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

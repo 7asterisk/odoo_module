@@ -1,0 +1,127 @@
+<odoo>
+    <data>
+        <!--         explicit list view definition -->
+        <record model="ir.ui.view" id="mysales_order_list">
+            <field name="name">order list</field>
+            <field name="model">mysales.order</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="order_id"/>
+                    <field name="cust_id"/>
+                    <field name="order_time"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <report
+                id="mysales.order_report"
+                model="mysales.order"
+                string="Reports"
+                report_type="qweb-pdf"
+                name="mysales.order_report"
+                file="mysales.order_report"
+                attachment_use="True"/>
+
+
+        <record id="order_search_view" model="ir.ui.view">
+            <field name="name">mysales.order.search</field>
+            <field name="model">mysales.order</field>
+            <field name="arch" type="xml">
+                <search string="filter on order">
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="state" name="filter_state" context="{'group_by':'state'}"/>
+                    </group>
+                    <group expand="1" string="Group By">
+                        <filter string="customer" name="cust_id" context="{'group_by':'cust_id'}"/>
+                    </group>
+                    <group expand="1" string="Group By">
+                        <filter string="date" name="order_time" context="{'group_by':'order_time'}"/>
+                    </group>
+
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="session_calendar_view">
+            <field name="name">order.calendar</field>
+            <field name="model">mysales.order</field>
+            <field name="arch" type="xml">
+                <calendar string="Session Calendar" date_start="start_date" date_stop="end_date" color="cust_id">
+                    <field name="order_id"/>
+                </calendar>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="order_action_window">
+            <field name="name">Order window</field>
+            <field name="res_model">mysales.order</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="context">{"search_default_filter_state":1}</field>
+        </record>
+
+        <record id="view_sales_order_form" model="ir.ui.view">
+            <field name="name">mysales_order_form</field>
+            <field name="model">mysales.order</field>
+            <field name="arch" type="xml">
+                <form string="salesorder_form" attrs="{'delete': [('state','=','done')]}">
+                    <header>
+                        <button string="set draft" type="object" name="draft_progressbar" class="oe_highlight"
+                                attrs="{'invisible': [('state','!=','done')]}"/>
+
+                        <button string="confirm" type="object" name="confirm_progressbar" class="oe_highlight"
+                                attrs="{'invisible': [('state','!=','draft')]}"/>
+                        <button string="Done" type="object" name="done_progressbar" class="oe_highlight"
+                                attrs="{'invisible': [('state','!=','confirm')]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="order_id"/>
+                                <field name="order_time"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="cust_id" attrs="{'readonly': [('state','=','done')]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Order Lines" name="order_lines">
+                                <field name="order_line_ids" attrs="{'readonly': [('state','=','done')]}">
+                                    <form>
+                                        <field name="state" invisible="1"/>
+                                        <field name="product_id"></field>
+                                        <field name="quantity"/>
+                                        <field name="price"/>
+                                        <field name="tax"/>
+                                        <field name="sub_total"/>
+                                    </form>
+                                    <tree
+                                            string="Sales Order Lines"
+                                            editable="bottom">
+                                        <field name="state" invisible="1"/>
+                                        <field name="product_id"></field>
+                                        <field name="quantity"/>
+                                        <field name="price"/>
+                                        <field name="tax"/>
+                                        <field name="sub_total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <group colspan="4">
+                            <field name="total"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
